@@ -13743,7 +13743,7 @@
 
       (data.authors || []).forEach((a) => {
         meta("citation_author", `${a.lastName}, ${a.firstName}`);
-        meta("citation_author_institution", a.affiliation);
+        meta("citation_author_Company", a.affiliation);
       });
     } else {
       console.warn("No DOI suffix in data; not adding citation meta tags!");
