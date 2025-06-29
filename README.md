@@ -46,8 +46,8 @@ Setup Instructions
 
         Under "Build and deployment", for the Source, select "Deploy from a branch".
 
-        Under "Branch", select gh-pages as the source branch and / (root) as the folder. Click Save.
-
+        Under "Branch", select main as the source branch and / (root) as the folder. Click Save.
+Under Actions view the build of the pages
 After a minute or two, your website will be live at https://your-username.github.io. From now on, any changes you push to the main branch will automatically be deployed to your live site.
 
 Customization
