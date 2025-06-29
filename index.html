@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xolani Earl Mti - Data Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        // Configure Tailwind to use the 'class' strategy for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+        }
+        // Immediately apply the theme on initial load to prevent FOUC (Flash of Unstyled Content)
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .skill-card, .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .skill-card:hover, .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .dark .skill-card:hover, .dark .project-card:hover {
+             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        }
+        .project-card {
+            cursor: pointer;
+        }
+        /* Modal styles */
+        #project-modal {
+            transition: opacity 0.3s ease;
+        }
+        #project-modal-content {
+            transition: transform 0.3s ease;
+        }
+        /* Animation for curved text */
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        #text-path-container {
+            animation: spin 30s linear infinite;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        #text-path-container span {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 50%;
+            transform-origin: bottom center;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-40 shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-gray-800 dark:text-white">Xolani Earl Mti</a>
+            <div class="flex items-center">
+                <nav class="hidden md:flex space-x-6 mr-4">
+                    <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">About</a>
+                    <a href="#skills" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">Skills</a>
+                    <a href="#experience" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">Experience</a>
+                    <a href="#projects" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">Featured Projects</a>
+                    <a href="#personal-projects" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">Personal Projects</a>
+                    <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">Contact</a>
+                </nav>
+                <button id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg p-2.5">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zM13.536 14.95l-.707-.707a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-1.414z"></path></svg>
+                </button>
+                <button id="mobile-menu-button" class="md:hidden ml-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800">
+            <a href="#about" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-300">About</a>
+            <a href="#skills" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-300">Skills</a>
+            <a href="#experience" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-300">Experience</a>
+            <a href="#projects" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-300">Featured Projects</a>
+            <a href="#personal-projects" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-300">Personal Projects</a>
+            <a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-300">Contact</a>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section id="home" class="container mx-auto px-6 py-20 md:py-32">
+             <div class="flex flex-wrap items-center">
+                <div class="w-full md:w-1/2">
+                    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
+                        Senior Data Engineer
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl text-blue-600 dark:text-blue-400 font-semibold mt-2">Building Scalable & Reliable Data Architectures</h2>
+                    <p class="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-xl">
+                        I extract information by listening attentively, and with performance in mind, I transform that information into knowledge after ensuring its quality and integrity.
+                    </p>
+                    <div class="mt-8 flex space-x-4">
+                        <a href="mailto:earl4xolani@gmail.com" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg">
+                            Get In Touch
+                        </a>
+                        <a href="#projects" class="bg-white dark:bg-gray-700 dark:text-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 border border-gray-300 dark:border-gray-600">
+                            View My Work
+                        </a>
+                    </div>
+                     <div class="mt-8 flex space-x-6">
+                        <a href="https://github.com/yourusername" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">
+                            <i class="fab fa-github fa-2x"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/yourusername" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">
+                            <i class="fab fa-linkedin fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 mt-12 md:mt-0 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 shadow-2xl">
+                        <div id="text-path-container" class="absolute w-full h-full text-gray-600 dark:text-gray-400">
+                            <!-- JS will populate this -->
+                        </div>
+                        <div class="z-10 text-6xl md:text-7xl font-bold text-gray-500 dark:text-gray-300">
+                            XM
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me -->
+        <section id="about" class="bg-white dark:bg-gray-800 py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2 text-gray-800 dark:text-white">About Me</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
+                <div class="max-w-4xl mx-auto text-center text-lg text-gray-600 dark:text-gray-400">
+                    <p>
+                        From the moment I ran my first SQL query, I was hooked on the power of data. Over my career, I've dedicated myself to mastering the technologies and methodologies that turn data chaos into clarity. I thrive on the challenge of building robust, efficient data pipelines that serve as the backbone for analytics and machine learning applications.
+                    </p>
+                    <p class="mt-4">
+                        My philosophy is that a data engineer's work is never truly done. I am constantly learning, exploring new tools, and finding better ways to optimize performance and ensure data quality. I'm not just building systems; I'm enabling data-driven decisions that propel businesses forward.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2 text-gray-800 dark:text-white">Technical Skills</h2>
+                 <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg skill-card">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600 dark:text-blue-400">Languages & Databases</h3>
+                        <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Python</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Scala</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Java</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>SQL</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>PHP</li>
+                             <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Teradata</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg skill-card">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600 dark:text-blue-400">Big Data & Streaming</h3>
+                        <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Apache Spark</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Apache Hadoop</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Apache Kafka</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Apache Hive</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Ab-initio</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg skill-card">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600 dark:text-blue-400">Cloud & DevOps</h3>
+                        <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Google Cloud</li>
+                             <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Azure</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Docker & Kubernetes</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>OpenShift</li>
+                             <li><i class="fas fa-check-circle text-green-500 mr-2"></i>CI/CD</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg skill-card">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600 dark:text-blue-400">Orchestration & Tools</h3>
+                        <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Apache Airflow</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>REST APIs</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>GraphQL</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Git & GitHub</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="bg-white dark:bg-gray-800 py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2 text-gray-800 dark:text-white">Career Journey</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
+                <div class="max-w-3xl mx-auto">
+                    <div class="relative border-l-2 border-blue-200 dark:border-blue-700">
+                        <div class="mb-12 pl-10">
+                            <div class="absolute -left-3.5 mt-1.5 w-6 h-6 bg-blue-600 rounded-full border-4 border-white dark:border-gray-800"></div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Nov 2023 - Present</p>
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Senior Data Engineer</h3>
+                            <p class="text-md font-semibold text-gray-600 dark:text-gray-400">First National Bank</p>
+                            <ul class="mt-2 list-disc list-inside text-gray-600 dark:text-gray-400">
+                                <li>Software development, data modelling, and building data pipelines.</li>
+                                <li>Implementing solutions supporting an active pipeline for fraud detection.</li>
+                                <li>Deployed Python automation applications in Kubernetes.</li>
+                            </ul>
+                        </div>
+                        <div class="mb-12 pl-10">
+                            <div class="absolute -left-3.5 mt-1.5 w-6 h-6 bg-blue-600 rounded-full border-4 border-white dark:border-gray-800"></div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Jan 2022 - Oct 2023</p>
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Graduate Data Engineer</h3>
+                            <p class="text-md font-semibold text-gray-600 dark:text-gray-400">First National Bank</p>
+                            <ul class="mt-2 list-disc list-inside text-gray-600 dark:text-gray-400">
+                                <li>Built production python automation apps on Kubernetes using ELK stack for logging.</li>
+                                <li>Extracted, transformed, and loaded data using Ab-initio and Spark/Scala.</li>
+                                <li>Provided production support and managed containers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Projects Section -->
+        <section id="projects" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2 text-gray-800 dark:text-white">Featured Projects</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project 1 Card -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden project-card" data-project-id="intellibock">
+                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Intellibock" alt="Intellibock Project" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 dark:text-white">Intellibock: Real-Time Fraud Detection</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Developed data pipelines using ML to flag fraudulent transactions in real-time (under 200ms) to ensure customer security.
+                            </p>
+                            <div class="text-blue-600 dark:text-blue-400 hover:underline font-semibold">View Details <i class="fas fa-arrow-right ml-1"></i></div>
+                        </div>
+                    </div>
+                    <!-- Project 2 Card -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden project-card" data-project-id="autologin">
+                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Automation" alt="Issue Automation Project" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 dark:text-white">Issue Autologin & Stats</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Built a REST API to automate logging of production failures, saving 2+ hours of manual effort and pushing progress data to a cloud DB.
+                            </p>
+                             <div class="text-green-600 dark:text-green-400 hover:underline font-semibold">View Details <i class="fas fa-arrow-right ml-1"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Personal Projects Section -->
+        <section id="personal-projects" class="bg-white dark:bg-gray-800 py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2 text-gray-800 dark:text-white">Personal & Academic Projects</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
+                <div class="max-w-xl mx-auto">
+                    <!-- Project 3 Card -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden project-card" data-project-id="research">
+                        <img src="https://placehold.co/600x400/8B5CF6/FFFFFF?text=Research" alt="Honours Research Project" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 dark:text-white">Honours Research: Predicting Student Success</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                In two published research papers, we identified key factors that can be used to predict student success within a given career path.
+                            </p>
+                             <div class="text-purple-600 dark:text-purple-400 hover:underline font-semibold">Read Papers <i class="fas fa-arrow-right ml-1"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Let's Connect</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">
+                    I'm always open to discussing new opportunities, interesting projects, or just talking about data. Feel free to reach out!
+                </p>
+                <a href="mailto:earl4xolani@gmail.com" class="mt-8 inline-block bg-blue-600 text-white font-bold text-lg py-4 px-8 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg">
+                    Say Hello
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-4">
+                <a href="https://github.com/yourusername" target="_blank" class="text-gray-400 hover:text-white transition duration-300 mx-3">
+                    <i class="fab fa-github fa-lg"></i>
+                </a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" class="text-gray-400 hover:text-white transition duration-300 mx-3">
+                    <i class="fab fa-linkedin fa-lg"></i>
+                </a>
+                 <a href="mailto:earl4xolani@gmail.com" class="text-gray-400 hover:text-white transition duration-300 mx-3">
+                    <i class="fas fa-envelope fa-lg"></i>
+                </a>
+            </div>
+            <p>&copy; 2024 Xolani Earl Mti. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4">
+        <div id="project-modal-content" class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <h2 id="modal-title" class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Project Title</h2>
+                    <button id="modal-close-button" class="text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white text-2xl">&times;</button>
+                </div>
+                <img id="modal-image" src="" alt="Project Image" class="w-full h-64 object-cover rounded-lg mb-4">
+                <div id="modal-description" class="text-gray-700 dark:text-gray-400 space-y-4">
+                </div>
+                <div id="modal-tags" class="mt-4 mb-4">
+                </div>
+                <a id="modal-link" href="#" target="_blank" class="inline-block bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- DATA STORE FOR PROJECTS ---
+        const projectData = {
+            intellibock: {
+                title: "Intellibock: Real-Time Fraud Detection",
+                image: "https://placehold.co/600x400/3B82F6/FFFFFF?text=Intellibock",
+                description: `
+                    <p>Fraud detection is a crucial task for banks that handle millions of payments every day. To ensure the security and trust of their customers, we developed data pipelines that use machine learning models to flag transactions as fraudulent or not in real time.</p>
+                    <p>The core challenge was to process and analyze incoming transaction data within a 200-millisecond window. This required a highly optimized architecture using Apache Kafka for data ingestion and Apache Spark for stream processing. The system successfully reduced fraudulent transactions while maintaining a low false-positive rate, directly enhancing the bank's security posture.</p>
+                `,
+                tags: ['Real-Time', 'Machine Learning', 'Data Pipelines', 'Apache Kafka', 'Apache Spark'],
+                link: '#', // Replace with actual link
+                linkText: 'View on GitHub'
+            },
+            autologin: {
+                title: "Issue Autologin & Stats",
+                image: "https://placehold.co/600x400/10B981/FFFFFF?text=Automation",
+                description: `
+                    <p>Monitoring job failures in a production environment was a time-consuming manual process, often taking over two hours to identify, log, and assign each error. This delay impacted resolution times and developer productivity.</p>
+                    <p>To solve this, I designed and built a solution using a REST API. The system automatically detects job failures, logs a detailed ticket in our issue tracking software (like Jira), and pushes metadata about the issue to a cloud database for analytics. This automation eliminated the manual logging process, provided near-instant failure alerts, and created a valuable dataset for analyzing error trends over time.</p>
+                `,
+                tags: ['Automation', 'REST API', 'Cloud', 'Python', 'CI/CD'],
+                link: '#', // Replace with actual link
+                linkText: 'Read Case Study'
+            },
+            research: {
+                title: "Honours Research: Predicting Student Success",
+                image: "https://placehold.co/600x400/8B5CF6/FFFFFF?text=Research",
+                description: `
+                    <p>Preventive measures, in conjunction with early identification of at-risk students, can significantly increase their academic and career success. This was the focus of my honours research, which culminated in two published research papers on the IEEE Xplore digital library.</p>
+                    <p>We analyzed various academic and demographic datasets to build predictive models. The research successfully identified key factors—such as early-term grades, course load, and engagement metrics—that strongly correlate with a student's likelihood of success in a particular career path. These findings can help educational institutions develop targeted intervention strategies.</p>
+                `,
+                tags: ['Research', 'Predictive Analytics', 'IEEE', 'Machine Learning', 'Python'],
+                link: '#', // Replace with actual links to papers
+                linkText: 'Read The Papers'
+            }
+        };
+
+        // --- THEME TOGGLE LOGIC ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Change the icons inside the button based on previous settings
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            // toggle icons inside button
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // if set via local storage previously
+            if (localStorage.getItem('theme')) {
+                if (localStorage.getItem('theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                }
+            // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+        });
+
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('project-modal');
+        const modalContent = document.getElementById('project-modal-content');
+        const closeButton = document.getElementById('modal-close-button');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        function openModal(projectId) {
+            const data = projectData[projectId];
+            if (!data) return;
+
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-image').src = data.image;
+            document.getElementById('modal-image').alt = data.title;
+            document.getElementById('modal-description').innerHTML = data.description;
+            
+            const tagsContainer = document.getElementById('modal-tags');
+            tagsContainer.innerHTML = '';
+            data.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full';
+                tagElement.textContent = tag;
+                tagsContainer.appendChild(tagElement);
+            });
+
+            const link = document.getElementById('modal-link');
+            link.href = data.link;
+            link.innerHTML = `${data.linkText} <i class="fas fa-arrow-right ml-1"></i>`;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        projectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                openModal(card.dataset.projectId);
+            });
+        });
+
+        closeButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+        });
+
+        // --- MOBILE MENU LOGIC ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                 mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // --- CURVED TEXT LOGIC ---
+        function setupCurvedText() {
+            const container = document.getElementById('text-path-container');
+            if (!container) return;
+            
+            const text = "XOLANI EARL MTI • SENIOR DATA ENGINEER • ";
+            const chars = text.split('');
+            const angleStep = 360 / chars.length;
+
+            let generatedHtml = '';
+            chars.forEach((char, i) => {
+                const angle = angleStep * i;
+                generatedHtml += `<span style="transform: rotate(${angle}deg);">${char}</span>`;
+            });
+            container.innerHTML = generatedHtml;
+        }
+        setupCurvedText();
+    </script>
+</body>
+</html>
