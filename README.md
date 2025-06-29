@@ -13,31 +13,42 @@ Features
 
     Built with Tailwind CSS: Utilizes a modern utility-first CSS framework for rapid UI development.
 
-How to Use (Deploy your own version)
+Deployment with GitHub Actions
 
-You can easily use this template to create your own portfolio website.
+This project uses a GitHub Actions workflow to automatically deploy the website to GitHub Pages.
+How it Works
 
-    Create a Repository:
+    Any push to the main branch triggers the workflow.
 
-        Create a new public repository on GitHub.
+    The workflow takes the contents of the repository (your index.html file).
 
-        You must name it your-username.github.io (replace your-username with your actual GitHub username).
+    It pushes these contents to a special deployment branch called gh-pages.
 
-    Download the Code:
+    GitHub Pages serves the website from this gh-pages branch.
 
-        Download the index.html file from this repository.
+Setup Instructions
 
-    Upload the File:
+    Create Repository:
 
-        In your newly created repository, click on Add file > Upload files.
+        Create a new public repository on GitHub named your-username.github.io.
 
-        Drag and drop the index.html file into the uploader.
+    Upload Files:
 
-        Commit the changes.
+        Upload your index.html file.
 
-    Done!
+        Create a directory named .github/workflows.
 
-        Your website will be live at https://your-username.github.io in a few minutes.
+        Inside that directory, create a new file named deploy.yml and paste the contents of the workflow file into it.
+
+    Set Deployment Branch:
+
+        In your repository's Settings tab, go to the Pages section in the sidebar.
+
+        Under "Build and deployment", for the Source, select "Deploy from a branch".
+
+        Under "Branch", select gh-pages as the source branch and / (root) as the folder. Click Save.
+
+After a minute or two, your website will be live at https://your-username.github.io. From now on, any changes you push to the main branch will automatically be deployed to your live site.
 
 Customization
 
